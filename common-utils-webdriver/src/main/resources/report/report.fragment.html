@@ -1,0 +1,262 @@
+<script type="application/javascript">
+
+document.addEventListener("DOMContentLoaded", function(event) {
+
+	if (window.__init__reports__) {
+		return;
+	}
+
+	window.__init__reports__ = true;
+
+	function loadScript(url, callback) {
+
+		var script = document.createElement("script");
+		script.type = "text/javascript";
+		script.onload = function() {
+			callback();
+		};
+		script.src = url;
+		document.getElementsByTagName("head")[0].appendChild(script);
+	}
+
+	function processReport() {
+		
+		var version = 1;
+        var BUTTON_BUSINESS = 'Show Business View';
+        var BUTTON_DEVELOPER = 'Show Developer View';
+        var developerMode = true;
+		
+		$( "a:contains('Screenshot')" ).click(function(event) {
+			event.preventDefault();
+			
+			if (version == 1) {
+			
+				if ($(this).next().is(":visible")) {
+					$(this).next().css("display","none"); 
+				} else {
+					$(this).next().css("display","block");
+				}
+			
+			} else if (version == 2) {
+
+				
+				if ($(this).next().children("img").is(":visible")) {
+					$(this).next().children("img").css("display","none"); 
+				} else {
+					$(this).next().children("img").css("display","block");
+				}
+				
+			}
+			
+		}); 
+
+		function configureVersion1Html() {
+			
+			$(".scenario-keyword").nextAll().each(function(index, value) {
+				
+				$(value).parent().nextUntil(".feature-tags").each(function(index, siblings) {
+					
+					if ($(siblings).is("a") && $(siblings).text().indexOf("Screenshot") == 0) {
+						$(siblings).html($(siblings).html() + "<br/>");
+						$(siblings).removeAttr('onclick');
+					}
+					
+				}).wrapAll( "<div class='scenario_" + index + "' />");
+				
+			});
+			
+		}
+		
+		function configureVersion2Html() {
+			
+			$(".scenario-keyword").nextAll().each(function(index, value) {
+				
+				$(value).parent().nextUntil(".feature-tags").each(function(index, siblings) {
+					
+					if ($(siblings).is("a") && $(siblings).text().indexOf("Screenshot") == 0) {
+
+						$(siblings).removeAttr('onclick');
+						$(this).next().children("img").css("padding-left", "50px");
+						
+					}
+					
+				}).wrapAll( "<div class='scenario_" + index + "' />");
+				
+			});			
+			
+		}		
+		
+		function configureHtml() {
+			
+			if ( $(".footer").text().indexOf("cucumber-reporting-0.1.0") >= 0 ) {
+				version = 2;
+				configureVersion2Html();
+			} else {
+				configureVersion1Html();
+			}
+			
+		}
+		
+		var displayFunctionality = function() {
+			
+		    var developerModeButton = '<li><a href="javascript:;" id="toggle_dev_mode"></a>';
+		    var showAllButton = '<li><a href="javascript:;" id="toggle_show_all_mode" style="text-align: left;">Show All Output</a>';
+		
+			$('#nav').removeClass('grid_6').addClass('grid_8');
+			$('#nav').children().first().append(developerModeButton).append(showAllButton);
+			$('#toggle_dev_mode').on('click', toggleDeveloperMode);
+			
+			$("#toggle_show_all_mode").click(function() {
+			
+				if ($(this).text() == 'Show All Output') {
+					
+					$(this).text("Hide All Output");
+					$("div[id^='scenario_']").show("slow");
+					$(".container_12").find("img").show("slow");
+					$(".container_12").find("img").css("display", "block");
+					$("a[id^='link_scenario_']").text('-');
+					
+				} else {
+					
+				    $(this).text("Show All Output");
+					$("div[id^='scenario_']").hide("slow");
+					$(".container_12").find("img").hide("slow");
+					$(".container_12").find("img").css("display", "none");
+					$("a[id^='link_scenario_']").text('+');
+					
+			    }
+		
+			});
+		
+			$(".scenario-keyword").each(function(index) {
+		
+				$(this).html("<a href='javascript:;' id='link_scenario_" + (index) + "' style='font-size: large; color: #0097da;'>+</a> &nbsp;Scenario:");
+				
+		    });
+			
+			$("a[id^='link_scenario_']").click(function(event) {
+
+				event.preventDefault();
+
+				if ( $(this).text() == "-" ) {
+
+					$(this).parent().parent().next().find("img").hide("slow");
+					$(this).parent().parent().next().find("img").css("display", "none");
+					$(this).parent().parent().next().find(".devView").hide("slow");
+					$(this).parent().parent().next().find(".devViewDetail").hide("slow");
+										
+					$(this).text("+");
+				
+				} else {
+					
+					$(this).parent().parent().next().find("img").show("slow");
+					$(this).parent().parent().next().find("img").css("display", "block");
+					$(this).parent().parent().next().find(".devView").show("slow");
+					$(this).parent().parent().next().find(".devViewDetail").show("slow");
+					
+					$(this).text("-");					
+					
+				}
+				
+			});
+			
+		};
+		
+		 var toggleDeveloperMode = function() {
+		
+			 developerMode = !developerMode;
+
+	         if (developerMode) {
+	        	 
+	        	 $('#toggle_dev_mode').text(BUTTON_BUSINESS);
+	        	 $("#toggle_show_all_mode").text("Show All Output");
+				 $('#toggle_show_all_mode').show();
+				 $('.devView').show();
+				 $("a[id^='link_scenario_']").show();
+				 
+			 } else {
+				 
+				 $('#toggle_dev_mode').text(BUTTON_DEVELOPER);
+				 $('#toggle_show_all_mode').hide();
+				 $('.devView').hide();
+				 $('.devViewDetail').hide();
+				 $("a[id^='link_scenario_']").hide();
+				 $(".container_12").find("img").hide();
+				 $("a[id^='link_scenario_']").text('+');
+				 
+		     }
+		
+		 };
+		 
+		 var updateImageLinkText = function() {				
+				
+            $(".step-keyword").each(function(index, step) {
+
+                var screenShots = [];
+                var substituteText = [];
+
+                $(step).parent().nextAll().each(function(step_index, value) {
+
+                    if ($(value).find("span").hasClass("step-keyword")) {
+                        return false;
+                    }
+
+                    if ($(value).is("a") && $(value).text().indexOf("Screenshot") == 0) {
+
+                        screenShots.push($(value));
+                        
+                        $(value).addClass("output-data");
+                        $(value).css("background-color", "#ffffff");
+                        
+                    }
+
+                    if ($(value).find("span[id='screenshot']")) {
+
+                        $(value).find("span[id='screenshot']").each(function(imgtext_index, sub_text) {
+
+                            substituteText.push(sub_text);
+
+                        });
+
+                    }
+
+                });
+
+                if (screenShots.length == substituteText.length) {
+                  
+               	 for (var i = 0; i < screenShots.length; i++) {
+
+                    $(screenShots[i]).html($(substituteText[i]).html());
+                    
+                    if ( version == 1 ) {
+                    	
+                    	$(screenShots[i]).html($(substituteText[i]).html() + "<br/>");
+                    	
+                    }
+
+                  }
+               	 
+                }
+
+            });
+	
+		
+		 };		 
+		
+		configureHtml();
+		
+		displayFunctionality();
+		
+		toggleDeveloperMode();
+		
+		updateImageLinkText();
+
+	}
+
+	loadScript("http://code.jquery.com/jquery-1.11.0.min.js", function() {
+		processReport();
+	});
+
+});
+
+</script>

@@ -1,0 +1,93 @@
+<script type="application/javascript">
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+
+        if (window.__init__reports__) {
+            return;
+        }
+
+        window.__init__reports__ = true;
+
+        function processReport() {
+
+            var BUTTON_BUSINESS = 'Show Business View';
+            var BUTTON_DEVELOPER = 'Show Developer View';
+            var developerMode = true;
+
+            var toggleDeveloperMode = function() {
+
+                developerMode = !developerMode;
+
+                if (developerMode) {
+                    $('#toggle_dev_mode').text(BUTTON_BUSINESS);
+                    $('.outputs.inner-level').show();
+                    $( "a[id^='link_scenario_']" ).show();
+                } else{
+                    $('#toggle_dev_mode').text(BUTTON_DEVELOPER);
+                    $('.outputs.inner-level').hide();
+                    $( "a[id^='link_scenario_']" ).hide();
+                    $( "a[id^='link_scenario_']" ).text('+');
+                }
+
+            };
+
+            var addToggleButton = function () {
+
+                var developerModeButton = '<li><a href="javascript:;" id="toggle_dev_mode"></a>';
+
+                $('.nav').append(developerModeButton);
+                $('#toggle_dev_mode').on('click', toggleDeveloperMode);               
+
+                // Some magic JS that will move our custom section header to become the hyperlinked expandable region
+                //  without this each output we write has a heading like "Output 1", then "Output 2" etc
+                $( ".output" ).each(function( index ) {
+                    // Only need to find the first dev_view_output_title as if the section has a parent we dont want the parent and all its child
+                    //  sections to be found, we would only want the parent title text shown here
+                    $( this ).find('div:first').html( $( this ).find('.dev_view_output_title').first() );
+                });
+                
+                $( ".scenario-keyword" ).each(function( index ) {
+                    $( this ).html("<a href='javascript:;' id='link_scenario_" + ( index + 1 ) + "_' style='font-size: large; color: #0097da;'>+</a> &nbsp;Scenario:");
+                }); 
+                                
+                                
+                $( "a[id^='link_scenario_']" ).click(function(event) { 
+                	
+                	var parentRef = $(this);
+                	
+                	$(this).parent().parent().nextAll().each(function(index, value) {
+                		
+                		if ($(value).find("span").hasClass("scenario-keyword")) {
+                	          return false;
+                	    }
+                			
+                    	if ($(parentRef).text() == '+') {
+                    		$(value).find("div[id^='scenario_']").show('slow');
+                    	} else {
+                    		$(value).find("div[id^='scenario_']").hide('slow');
+                    	}            		
+                		
+                	});
+                	
+                	if ($(this).text() == '+') {
+                		$(this).text('- ');
+                	} else {
+                		$(this).text('+');
+                	}
+                	
+                	event.preventDefault();
+                	
+                }); 
+            };
+          
+            function initialize() {
+                addToggleButton();
+                toggleDeveloperMode();
+            }
+
+            initialize();
+        }
+
+        processReport();
+    });
+</script>

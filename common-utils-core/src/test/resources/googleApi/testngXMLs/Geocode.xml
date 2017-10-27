@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Geocode" parallel="instances" thread-count="5">
+	<parameter name="environment" value="staging" />
+	<parameter name="runLocation" value="local" />
+	<parameter name="operatingSystem" value="" />
+	<test name="Geocode">
+		<classes>
+			<class name="com.orasi.rest.googleApi.geoCode.Geocode" />
+			<!-- <class name="com.orasi.rest.googleApi.geoCode.Geocode_JSON" /> -->
+		</classes>
+	</test> <!-- Geocode -->
+</suite> <!-- Geocode -->

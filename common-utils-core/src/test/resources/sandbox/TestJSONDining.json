@@ -1,0 +1,71 @@
+{
+    "smokeDining" : {
+        "diningList" : [
+            "napa-rose",
+            "goofys-kitchen"
+        ],
+        "diningInfo" : {
+            "date" : null,
+            "relativeDate" : {
+                "monthsAway" : 1,
+                "startDay" : 15,
+                "duration" : null,
+                "randomDay" : false
+            },
+            "time" : "Dinner",
+            "partySize" : 1
+        },
+        "guestInfo" : {
+            "email" : null,
+            "generateEmail" : {
+                "template" : "wdprqa_{$env}_smkdine_{$day}_{$random}@disneytest.com",
+                "randomMin" : 1,
+                "randomMax" : 2
+            },
+            "key" : "password1",
+            "securityQuestions" : [],
+            "phoneNumber" : "3108974123",
+            "name" : {
+                "title" : "mr.",
+                "suffix" : "i",
+                "firstName" : "first",
+                "middleName" : "m",
+                "lastName" : "last"
+            },
+            "misc" : null,
+            "guests" : [],
+            "paymentCards" : [
+                {
+                  "cardNumber" : "377777684182882",
+                  "ccv" : "7240",
+                  "month" : "01",
+                  "year" : "2015",
+                  "paymentType" : "CreditCard",
+                  "cardType" : "American Express",
+                  "billingAddress" : {
+                      "address1" : "666 SUNSET BLVD",
+                      "address2" : "",
+                      "city" : "Anaheim",
+                      "state" : "California",
+                      "country" : "United States",
+                      "zip" : "92808"
+                  }
+                }
+             ],
+             "address" : {
+                 "address1" : "666 SUNSET BLVD",
+                 "address2" : "",
+                 "city" : "Anaheim",
+                 "state" : "California",
+                 "country" : "United States",
+                 "zip" : "92808",
+                 "randomize" : null
+            }
+        },
+        "logging" : {
+            "capturePageSnapshots" : true,
+            "logSelectors" : false,
+            "logPageSourceOnError" : true
+        }
+    }
+}

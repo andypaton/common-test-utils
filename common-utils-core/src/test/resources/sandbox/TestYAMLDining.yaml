@@ -1,0 +1,8 @@
+smokeDining:
+      diningList:
+           - "napa-rose"
+           - "goofys-kitchen"
+      diningInfo:
+           date: null
+           time: "Dinner"
+           partySize: 1

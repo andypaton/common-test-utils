@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tests>
+    <smokeDining>
+        <diningList type="array">
+            <item1>napa-rose</item1>
+            <item2>goofys-kitchen</item2>
+        </diningList>
+        <diningInfo>
+            <partySize>1</partySize>
+            <date>null</date>
+            <time>Dinner</time>
+        </diningInfo>
+    </smokeDining>
+</tests>

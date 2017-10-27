@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="com.orasi_Java-Automation-Framework_jar_1.0">
+
+    <!--
+    see examples at http://testng.org/doc/documentation-main.html#testng-xml
+
+    <suite-files>
+        <suite-file path="./junit-suite.xml" />
+    </suite-files>
+
+    <test name="TimeOut">
+        <classes>
+            <class name="test.timeout.TimeOutTest" />
+            <class name="test.timeout.TimeOutFromXmlTest"/>
+            <class name="test.timeout.TimeOutThreadLocalSampleTest"/>
+        </classes>
+    </test>
+    -->
+    
+    <test name="TestingJSONDataProvider">
+        <classes>
+                <class name="com.orasi.sandbox.TestJSONDataProvider" />
+        </classes>
+    </test>
+    <test name="TestingXMLDataProvider">
+        <classes>
+                <class name="com.orasi.sandbox.TestXMLDataProvider" />
+        </classes>
+    </test>
+    <test name="TestingYAMLDataProvider">
+        <classes>
+                <class name="com.orasi.sandbox.TestYAMLDataProvider" />
+        </classes>
+    </test>
+    <test name="TestingCSVDataProvider">
+        <classes>
+                <class name="com.orasi.sandbox.TestCSVDataProvider" />
+        </classes>
+    </test>
+    <test name="TestSQLiteDataProvider">
+        <classes>
+                <class name="com.orasi.sandbox.TestSQLiteDataProvider" />
+        </classes>
+    </test>
+    <test name="TestExcelDataProvider">
+        <classes>
+                <class name="com.orasi.sandbox.TestExcelDataProvider" />
+        </classes>
+    </test>
+
+</suite>
