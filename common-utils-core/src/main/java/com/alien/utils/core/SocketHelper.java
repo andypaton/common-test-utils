@@ -9,6 +9,14 @@ import java.net.Socket;
 import org.apache.log4j.Logger;
 
 
+/**
+ * @description: Listens for a connection to be made to port, waiting a maximum timeout seconds
+ * 
+ * @example: 
+ *     SocketHelper socketHelper = new SocketHelper();
+ *     String socketStatus=socketHelper.portConnectionReceived(port, timeout);
+ *     assertTrue(socketStatus.contains("Connection received"));
+ */
 public class SocketHelper {
 	
     private static final Logger LOGGER = Logger.getLogger(SocketHelper.class.getName());
